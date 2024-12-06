@@ -1,10 +1,9 @@
 name: "Test Suite"
 
 on:
-  merge_group:
-    types: [checks_requested]
+  push:
     branches:
-      - main
+      - "mergify/merge-queue/*"
 
 jobs:
   test:
