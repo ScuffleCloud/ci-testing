@@ -143,6 +143,22 @@ mod tests {
     }
 
     #[test]
+    fn test_test_branches_enum2() {
+        assert_eq!(test_branches_enum(TestEnum::A), TestEnum::A);
+        assert_eq!(test_branches_enum(TestEnum::B), TestEnum::B);
+        assert_eq!(test_branches_enum(TestEnum::B2), TestEnum::B);
+        assert_eq!(test_branches_enum(TestEnum::C), TestEnum::C);
+    }
+    
+    #[test]
+    fn test_test_branches_enum3() {
+        assert_eq!(test_branches_enum(TestEnum::A), TestEnum::A);
+        assert_eq!(test_branches_enum(TestEnum::B), TestEnum::B);
+        assert_eq!(test_branches_enum(TestEnum::B2), TestEnum::B);
+        assert_eq!(test_branches_enum(TestEnum::C), TestEnum::C);
+    }
+
+    #[test]
     #[should_panic]
     fn test_bat_mans_chest() {
         bat_mans_chest(1);
