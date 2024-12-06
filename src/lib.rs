@@ -55,7 +55,7 @@ pub fn test_branches_enum(a: TestEnum) -> TestEnum {
 }
 
 pub fn bat_mans_chest(a: i32) -> i32 {
-    panic!("IT ARIVED: {}", a);
+    panic!("IT ARIVED2: {}", a);
 }
 
 pub fn big_brain_math(a: i32, mut b: i32) -> i32 {
