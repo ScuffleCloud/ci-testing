@@ -10,10 +10,10 @@ queue_rules:
 
       {% endif %}
       {% if co_authors %}
-      Co-authors: {% for user in co_authors %}@{{ user }}{% if not loop.last %}, {% endif %}{% endfor %}
+      Co-authors: {{ co_authors | join(", ") }}
       {% endif %}
-      {% if approved_by %}
-      Approved by: {% for user in approved_by %}@{{ user }}{% if not loop.last %}, {% endif %}{% endfor %}
+      {% if approved_reviews_by %}
+      Approved by: {{ approved_reviews_by | join(", ") }}
       {% endif %}
       Merged by: @{{ merged_by }}
       {% if body | get_section("## Tickets") %}
