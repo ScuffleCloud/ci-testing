@@ -166,6 +166,13 @@ mod tests {
     }
 
     #[test]
+    #[should_panic]
+    fn test_bat_mans_chest2() {
+        bat_mans_chest(1);
+        assert_eq!(proc::magic_macro!(1, 2), 3);
+    }
+
+    #[test]
     fn test_derive() {
         insta::assert_snapshot!(postcompile::compile! {
             #[derive(Debug, Clone, serde_derive2::Deserialize)]
