@@ -5,16 +5,18 @@ queue_rules:
     commit_message_template: |
       {{ title }} (#{{ number }})
 
-      {% if body contains "## Description" %}
+      {% if body | get_section("## Description") %}
       {{ body | get_section("## Description") }}
-      {% endif %}
 
+      {% endif %}
       {% if co_authors %}
-      Co-authors: {% for author in co_authors %}@{{ author }}{% if not loop.last %}, {% endif %}{% endfor %}
+      Co-authors: {% for user in co_authors %}@{{ user }}{% if not loop.last %}, {% endif %}{% endfor %}
       {% endif %}
-
+      {% if approved_by %}
+      Approved by: {% for user in approved_by %}@{{ user }}{% if not loop.last %}, {% endif %}{% endfor %}
+      {% endif %}
       Merged by: @{{ merged_by }}
+      {% if body | get_section("## Tickets") %}
 
-      {% if body contains "## Tickets" %}
       {{ body | get_section("## Tickets") }}
       {% endif %}
