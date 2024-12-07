@@ -5,8 +5,8 @@ queue_rules:
     commit_message_template: |
       {{ title }} (#{{ number }})
 
-      {% if body | get_section("## Description") %}
-      {{ body | get_section("## Description") }}
+      {% if body | get_section("## Motivation", "") %}
+      {{ body | get_section("## Motivation") }}
 
       {% endif %}
       {% if co_authors %}
@@ -16,7 +16,7 @@ queue_rules:
       Approved by: {{ approved_reviews_by | join(", ") }}
       {% endif %}
       Merged by: @{{ merged_by }}
-      {% if body | get_section("## Tickets") %}
+      {% if body | get_section("## Tickets", "") %}
 
       {{ body | get_section("## Tickets") }}
       {% endif %}
