@@ -58,6 +58,10 @@ pub fn bat_mans_chest(a: i32) -> i32 {
     panic!("IT ARIVED2: {}", a);
 }
 
+pub fn bat_mans_chest2(a: u128) -> u128 {
+    panic!("IT ARIVED2: {}", a);
+}
+
 pub fn big_brain_math(a: i32, mut b: i32) -> i32 {
     loop {
         for _ in 0..a {
@@ -152,8 +156,8 @@ mod tests {
     #[test]
     #[should_panic]
     fn test_bat_mans_chest2() {
-        bat_mans_chest(1);
-        assert_eq!(proc::magic_macro!(1, 2), 3);
+        bat_mans_chest2(1);
+        assert_eq!(proc::magic_macro2!(1, 2), 3);
     }
 
     #[test]
