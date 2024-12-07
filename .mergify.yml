@@ -1,2 +1,20 @@
 queue_rules:
   - name: test
+    batch_size: 10
+    merge_method: squash
+    commit_message_template: |
+      {{ title }} (#{{ number }})
+
+      {% if body contains "## Description" %}
+      {{ body | get_section("## Description") }}
+      {% endif %}
+
+      {% if co_authors %}
+      Co-authors: {% for author in co_authors %}@{{ author }}{% if not loop.last %}, {% endif %}{% endfor %}
+      {% endif %}
+
+      Merged by: @{{ merged_by }}
+
+      {% if body contains "## Tickets" %}
+      {{ body | get_section("## Tickets") }}
+      {% endif %}
