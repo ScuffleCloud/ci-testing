@@ -5,7 +5,7 @@ queue_rules:
     commit_message_template: |
       {{ title }} (#{{ number }})
 
-      {{ (body | split("## Motivation") | first) | trim }}
+      {{ body.split("## Motivation")[0] | trim }}
       {{ body | get_section("## Motivation") }}
 
       {% if co_authors %}
