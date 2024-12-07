@@ -40,18 +40,3 @@ jobs:
       - run: just test-ci ${{ matrix.rust.args }}
         env:
           CARGO_TERM_COLOR: always
-
-      - uses: codecov/codecov-action@v5
-        if: ${{ matrix.rust.version == 'nightly' }}
-        with:
-          fail_ci_if_error: true
-          files: ./lcov.info
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true
-
-      - name: Upload test results to Codecov
-        if: ${{ !cancelled() && matrix.rust.version == 'nightly' }}
-        uses: codecov/test-results-action@v1
-        with:
-          files: ./target/nextest/ci/junit.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
