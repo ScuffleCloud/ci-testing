@@ -107,15 +107,16 @@ checksum = "78ca9ab1a0babb1e7d5695e3530886289c18cf2f87ec19a575a0abdce112e3a3"
 
 [[package]]
 name = "postcompile"
-version = "0.0.3"
+version = "0.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "557a8cbb6553ffed11789334de3deb0c6b2c750c7ddd6cee9894c9727193e356"
+checksum = "ed667a05dd0034e280a554dfc4f0f87c770f9ea81f34285fb73ec13de25cdbcb"
 dependencies = [
  "cargo-platform",
  "cargo_metadata",
  "serde",
  "serde_derive",
  "serde_json",
+ "syn",
  "target-triple",
 ]
 

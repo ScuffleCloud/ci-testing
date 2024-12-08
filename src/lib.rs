@@ -24,15 +24,23 @@ pub fn sqrt(a: f64) -> f64 {
     a.sqrt()
 }
 
+#[cfg(feature = "some-feature")]
 pub fn log(a: f64, base: f64) -> f64 {
     a.log(base)
 }
 
 pub fn test_branches(a: f64, b: f64) -> f64 {
-    if a > b || a == b {
+    if a >= b {
         sqrt(a) * sqrt(b) * 0.5
     } else {
-        log(a, b)
+        #[cfg(feature = "some-feature")]
+        {
+            log(a, b)
+        }
+        #[cfg(not(feature = "some-feature"))]
+        {
+            a + b
+        }
     }
 }
 
@@ -115,7 +123,9 @@ mod tests {
     }
 
     #[test]
+    #[cfg(feature = "some-feature")]
     fn test_log() {
+        let base = 10.0;
         assert_eq!(log(10.0, 10.0), 1.0);
     }
 

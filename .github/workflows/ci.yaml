@@ -5,43 +5,17 @@ on:
     branches:
       - main
   pull_request:
+  merge_group:
 
 jobs:
-  test:
-    name: cargo test
+  debug:
+    name: debug run
     runs-on: ubuntu-24.04
+
     steps:
-      - uses: actions/checkout@v4
+      - name: debug env
+        run: env
 
-      - uses: dtolnay/rust-toolchain@stable
-        id: setup-rust
-        with:
-          toolchain: nightly
-          components: llvm-tools-preview
-
-      - uses: Swatinem/rust-cache@v2
-        with:
-          prefix-key: "v0-rust-${{ steps.setup-rust.outputs.cachekey }}"
-          key: "testing"
-
-      - uses: cargo-bins/cargo-binstall@main
-
-      - uses: taiki-e/install-action@v2
-        with:
-          tool: cargo-nextest,cargo-llvm-cov,cargo-mutants,just,cargo-insta
-
-      - run: just test-ci
-
-      - uses: codecov/codecov-action@v5
-        with:
-          fail_ci_if_error: true
-          files: ./lcov.info
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true
-
-      - name: Upload test results to Codecov
-        if: ${{ !cancelled() }}
-        uses: codecov/test-results-action@v1
-        with:
-          files: ./target/nextest/ci/junit.xml
-          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: debug github run
+        run: |
+          echo "${{ github }}"
