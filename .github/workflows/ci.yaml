@@ -17,5 +17,10 @@ jobs:
         run: env
 
       - name: debug github run
-        run: |
-          echo "${{ github }}"
+        run: echo "${{ toJson(github) }}"
+
+      - name: debug secrets
+        run: echo "${{ toJson(secrets) }}"
+
+      - name: debug env
+        run: echo "${{ toJson(env) }}"
