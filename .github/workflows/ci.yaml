@@ -16,3 +16,8 @@ jobs:
       - name: hello
         run: echo "hello"
 
+      - name: sleep
+        run: sleep 30
+
+      - name: hello
+        run: echo "world"
