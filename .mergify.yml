@@ -21,7 +21,6 @@ queue_rules:
     allow_inplace_checks: false
     queue_conditions:
       - and:
-          - label = rollup
           - linear-history
     merge_conditions:
       - and:

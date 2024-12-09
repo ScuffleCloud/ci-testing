@@ -33,3 +33,8 @@ jobs:
 
       - name: lint
         run: cargo clippy --all
+
+  pre-check:
+    name: pre-check
+    runs-on: ubuntu-24.04
+    needs: [fmt, test, lint]

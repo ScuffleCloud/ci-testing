@@ -20,10 +20,3 @@ jobs:
   merge-check:
     needs: [sleeping-job]
     runs-on: ubuntu-24.04
-
-    steps:
-      - name: wow
-        run: echo "wow"
-
-      - name: sleep for 10s
-        run: sleep 10
