@@ -1,10 +1,8 @@
 name: Merge Queue
 
 on:
-  push:
-    branches:
-      - mergify/rollup-queue/*
-      - mergify/default-queue/*
+  pull_request:
+  merge_group:
 
 jobs:
   sleeping-job:
@@ -20,3 +18,7 @@ jobs:
   merge-check:
     needs: [sleeping-job]
     runs-on: ubuntu-24.04
+
+    steps:
+      - name: dummy
+        run: echo "Dummy step to create a wrapper around a collection of jobs"
