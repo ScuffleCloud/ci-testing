@@ -1,23 +1,35 @@
-name: "Test Suite"
+name: CI
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
-  merge_group:
 
 jobs:
-  debug:
-    name: debug run
+  fmt:
+    name: fmt
     runs-on: ubuntu-24.04
 
     steps:
-      - name: debug env
-        run: env
+      - uses: actions/checkout@v4
 
-      - name: debug github run
-        run: |
-          echo "${{ toJson(github) }}"
-          echo "${{ toJson(secrets) }}"
-          echo "${{ toJson(env) }}"
+      - name: fmt
+        run: cargo fmt --all --check
+
+  test:
+    name: test
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: test
+        run: cargo test --all
+
+  lint:
+    name: lint
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: lint
+        run: cargo clippy --all

@@ -1,11 +1,12 @@
 ---
 source: src/lib.rs
-expression: "postcompile::compile!\n{\n    #[derive(Debug, Clone, serde_derive2::Deserialize)] struct Test\n    { a: u32, b: i32, } const TEST: Test = Test\n    { a: 1, b: proc::magic_macro2!(1, 2) };\n}"
+expression: "postcompile::compile!\n{\n    #![allow(dead_code)] #[derive(Debug, Clone, serde_derive2::Deserialize)]\n    struct Test { a: u32, b: i32, } const TEST: Test = Test\n    { a: 1, b: proc::magic_macro2!(1, 2) };\n}"
 snapshot_kind: text
 ---
 exit status: 0
 --- stdout 
 #![feature(prelude_import)]
+#![allow(dead_code)]
 #[prelude_import]
 use std::prelude::rust_2021::*;
 #[macro_use]
