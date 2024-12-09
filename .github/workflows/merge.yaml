@@ -22,3 +22,6 @@ jobs:
     steps:
       - name: dummy
         run: echo "Dummy step to create a wrapper around a collection of jobs"
+
+      - name: fail the job
+        run: exit 1
