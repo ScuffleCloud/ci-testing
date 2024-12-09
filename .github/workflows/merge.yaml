@@ -1,0 +1,29 @@
+name: Merge Queue
+
+on:
+  push:
+    branches:
+      - mergify/rollup-queue/*
+      - mergify/default-queue/*
+
+jobs:
+  sleeping-job:
+    name: debug run
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: sleep for 60 seconds
+        run: sleep 60
+
+  merge-check:
+    needs: [sleeping-job]
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: wow
+        run: echo "wow"
+
+      - name: sleep for 10s
+        run: sleep 10
