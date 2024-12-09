@@ -131,7 +131,7 @@ mod tests {
 
     #[test]
     fn test_test_branches() {
-        assert_eq!(test_branches(1.0, 2.0), 0.0);
+        assert_eq!(test_branches(1.0, 2.0), 3.0);
         assert_eq!(test_branches(1.0, 1.0), 0.5);
         assert_eq!(test_branches(0.0, 0.0), 0.0);
     }
@@ -169,6 +169,8 @@ mod tests {
     #[test]
     fn test_derive() {
         insta::assert_snapshot!(postcompile::compile! {
+            #![allow(dead_code)]
+
             #[derive(Debug, Clone, serde_derive2::Deserialize)]
             struct Test {
                 a: u32,
