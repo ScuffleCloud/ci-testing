@@ -13,11 +13,6 @@ jobs:
     runs-on: ubuntu-24.04
 
     steps:
-      - name: debug env
-        run: env
+      - name: hello
+        run: echo "hello"
 
-      - name: debug github run
-        run: |
-          echo "${{ toJson(github) }}"
-          echo "${{ toJson(secrets) }}"
-          echo "${{ toJson(env) }}"
