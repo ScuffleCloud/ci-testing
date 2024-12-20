@@ -1,0 +1,91 @@
+name: ci
+
+on:
+  push:
+    branches:
+      # - automation/brawl/try/*
+      # - automation/brawl/merge/*
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  clippy:
+    name: Clippy
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        id: setup-rust
+        with:
+          toolchain: nightly
+          components: clippy
+
+      - uses: Swatinem/rust-cache@v2
+        id: cache-rust
+        with:
+          prefix-key: "v0-rust-${{ steps.setup-rust.outputs.cachekey }}"
+          shared-key: clippy
+
+      - name: Make sure code is linted
+        run: cargo +nightly clippy
+
+  fmt:
+    name: Fmt
+    runs-on: ubuntu-24.04
+    permissions:
+      checks: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        id: setup-rust
+        with:
+          toolchain: nightly
+          components: rustfmt
+
+      - name: Make sure code is formatted
+        run: cargo +nightly fmt --check
+
+  test:
+    name: Test
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        id: setup-rust
+        with:
+          toolchain: nightly
+          components: llvm-tools-preview
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          prefix-key: "v0-rust-${{ steps.setup-rust.outputs.cachekey }}"
+          shared-key: test
+
+      - uses: cargo-bins/cargo-binstall@main
+
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-nextest,cargo-llvm-cov
+
+      # Note; we don't run the powerset here because it's very slow on CI
+      # Perhaps we should consider it at some point.
+      - name: Run tests
+        run: cargo +nightly llvm-cov nextest --no-fail-fast --all-features --lcov --output-path ./lcov.info --profile ci
+
+  # brawl-done:
+  #   runs-on: ubuntu-24.04
+  #   needs: [test, clippy, fmt]
+  #   if: ${{ !cancelled() && (startsWith(github.ref, 'refs/heads/automation/brawl/merge/') || startsWith(github.ref, 'refs/heads/automation/brawl/try/')) }}
+  #   steps:
+  #     - name: calculate the correct exit status
+  #       run: jq --exit-status 'all(.result == "success" or .result == "skipped")' <<< '${{ toJson(needs) }}'
