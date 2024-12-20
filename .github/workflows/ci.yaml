@@ -3,12 +3,8 @@ name: ci
 on:
   push:
     branches:
-      # - automation/brawl/try/*
-      # - automation/brawl/merge/*
-      - main
-  pull_request:
-    branches:
-      - main
+      - automation/brawl/try/*
+      - automation/brawl/merge/*
   workflow_dispatch:
 
 concurrency:
@@ -82,10 +78,10 @@ jobs:
       - name: Run tests
         run: cargo +nightly llvm-cov nextest --no-fail-fast --all-features --lcov --output-path ./lcov.info --profile ci
 
-  # brawl-done:
-  #   runs-on: ubuntu-24.04
-  #   needs: [test, clippy, fmt]
-  #   if: ${{ !cancelled() && (startsWith(github.ref, 'refs/heads/automation/brawl/merge/') || startsWith(github.ref, 'refs/heads/automation/brawl/try/')) }}
-  #   steps:
-  #     - name: calculate the correct exit status
-  #       run: jq --exit-status 'all(.result == "success" or .result == "skipped")' <<< '${{ toJson(needs) }}'
+  brawl-done:
+    runs-on: ubuntu-24.04
+    needs: [test, clippy, fmt]
+    if: ${{ !cancelled() && (startsWith(github.ref, 'refs/heads/automation/brawl/merge/') || startsWith(github.ref, 'refs/heads/automation/brawl/try/')) }}
+    steps:
+      - name: calculate the correct exit status
+        run: jq --exit-status 'all(.result == "success" or .result == "skipped")' <<< '${{ toJson(needs) }}'
