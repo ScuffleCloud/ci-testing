@@ -18,33 +18,5 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Run sccache-cache
-        uses: mozilla-actions/sccache-action@v0.0.7
-      
-      - name: Setup CC
-        run: |
-          bash_path=$(which bash)
-          mkdir -p /tmp/.brew
-          cat <<EOF > /tmp/.brew/clang-sccache-cc-wrapper
-          #!$bash_path
-          exec sccache clang "$@"
-          EOF
-          chmod +x /tmp/.brew/clang-sccache-cc-wrapper
-          echo "/tmp/.brew" >> $GITHUB_PATH
-
-          brew config
-          exit 1
-
-      - name: Tap ffmpeg
-        run: |
-          brew tap homebrew-ffmpeg/ffmpeg
-
       - name: Install ffmpeg
-        env:
-          CC: clang-sccache-cc-wrapper
-          CXX: clang-sccache-cc-wrapper
-          HOMEBREW_ENV_FILTERING: 0
-        run: |
-          set -e
-          which clang-sccache-cc-wrapper
-          brew install homebrew-ffmpeg/ffmpeg/ffmpeg
+        run: brew install ffmpeg
