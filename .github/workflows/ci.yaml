@@ -24,21 +24,23 @@ jobs:
       - name: Setup CC
         run: |
           bash_path=$(which bash)
-          cat <<EOF > ./sccache-cc-wrapper
+          mkdir -p /tmp/.brew
+          cat <<EOF > /tmp/.brew/sccache-cc-wrapper
           #!$bash_path
           exec sccache clang "$@"
           EOF
-          chmod +x ./sccache-cc-wrapper
-          echo "CC=./sccache-cc-wrapper" >> $GITHUB_ENV
-          echo "CXX=./sccache-cc-wrapper" >> $GITHUB_ENV
-          echo "HOMEBREW_CC=./sccache-cc-wrapper" >> $GITHUB_ENV
-          echo "HOMEBREW_CXX=./sccache-cc-wrapper" >> $GITHUB_ENV
-          echo "$(pwd)" >> $GITHUB_PATH
+          chmod +x /tmp/.brew/sccache-cc-wrapper
+          echo "/tmp/.brew" >> $GITHUB_PATH
 
       - name: Tap ffmpeg
         run: |
           brew tap homebrew-ffmpeg/ffmpeg
 
       - name: Install ffmpeg
+        env:
+          CC: sccache-cc-wrapper
+          CXX: sccache-cc-wrapper
+          HOMEBREW_CC: sccache-cc-wrapper
+          HOMEBREW_CXX: sccache-cc-wrapper
         run: |
           brew install homebrew-ffmpeg/ffmpeg/ffmpeg
