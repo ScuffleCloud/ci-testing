@@ -25,11 +25,11 @@ jobs:
         run: |
           bash_path=$(which bash)
           mkdir -p /tmp/.brew
-          cat <<EOF > /tmp/.brew/sccache-cc-wrapper
+          cat <<EOF > /tmp/.brew/clang-sccache-cc-wrapper
           #!$bash_path
           exec sccache clang "$@"
           EOF
-          chmod +x /tmp/.brew/sccache-cc-wrapper
+          chmod +x /tmp/.brew/clang-sccache-cc-wrapper
           echo "/tmp/.brew" >> $GITHUB_PATH
 
       - name: Tap ffmpeg
@@ -38,9 +38,11 @@ jobs:
 
       - name: Install ffmpeg
         env:
-          CC: sccache-cc-wrapper
-          CXX: sccache-cc-wrapper
-          HOMEBREW_CC: sccache-cc-wrapper
-          HOMEBREW_CXX: sccache-cc-wrapper
+          CC: clang-sccache-cc-wrapper
+          CXX: clang-sccache-cc-wrapper
+          HOMEBREW_CC: clang-sccache-cc-wrapper
+          HOMEBREW_CXX: clang-sccache-cc-wrapper
         run: |
+          set -e
+          which clang-sccache-cc-wrapper
           brew install homebrew-ffmpeg/ffmpeg/ffmpeg
