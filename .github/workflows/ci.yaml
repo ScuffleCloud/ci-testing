@@ -17,18 +17,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
-      - name: Cache Homebrew Packages
-        uses: actions/cache@v4
-        with:
-          path: |
-            /usr/local/Homebrew
-            /usr/local/Cellar
-            ~/Library/Caches/Homebrew
-          key: homebrew-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.github/workflows/ffmpeg-cache.yaml') }}
-          restore-keys: |
-            homebrew-${{ runner.os }}-${{ runner.arch }}-
-
-      - name: Install ffmpeg
+      - name: Tap ffmpeg
         run: |
           brew tap homebrew-ffmpeg/ffmpeg
-          brew install homebrew-ffmpeg/ffmpeg/ffmpeg
+      - uses: tecolicom/actions-use-homebrew-tools@v1
+        with:
+          tools: homebrew-ffmpeg/ffmpeg/ffmpeg
+          cache: true
+          key: macos-ffmpeg-${{ runner.os }}-${{ runner.arch }}
