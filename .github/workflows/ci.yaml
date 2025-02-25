@@ -20,8 +20,7 @@ jobs:
       - name: Tap ffmpeg
         run: |
           brew tap homebrew-ffmpeg/ffmpeg
-      - uses: tecolicom/actions-use-homebrew-tools@v1
+      - uses: gerlero/brew-install@v1
         with:
-          tools: homebrew-ffmpeg/ffmpeg/ffmpeg
-          cache: true
-          key: macos-ffmpeg-${{ runner.os }}-${{ runner.arch }}
+          packages: homebrew-ffmpeg/ffmpeg/ffmpeg
+
