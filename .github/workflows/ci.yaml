@@ -24,9 +24,9 @@ jobs:
             /usr/local/Homebrew
             /usr/local/Cellar
             ~/Library/Caches/Homebrew
-          key: homebrew-${{ runner.os }}
+          key: homebrew-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('.github/workflows/ffmpeg-cache.yaml') }}
           restore-keys: |
-            homebrew-${{ runner.os }}
+            homebrew-${{ runner.os }}-${{ runner.arch }}-
 
       - name: Install ffmpeg
         run: |
