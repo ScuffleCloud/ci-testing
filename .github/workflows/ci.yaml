@@ -26,5 +26,8 @@ jobs:
           brew tap homebrew-ffmpeg/ffmpeg
 
       - name: Install ffmpeg
+        env:
+          HOMEBREW_CC: sccache clang
+          CC: sccache clang
         run: |
-          brew install homebrew-ffmpeg/ffmpeg/ffmpeg --cc="sccache clang"
+          brew install homebrew-ffmpeg/ffmpeg/ffmpeg
