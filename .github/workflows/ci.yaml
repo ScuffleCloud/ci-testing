@@ -18,6 +18,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: gerlero/brew-install@v1
+      - name: Cache Homebrew
+        uses: actions/cache@v4
         with:
-          packages: ffmpeg
+          path: |
+            /usr/local/Homebrew
+            /usr/local/Cellar
+            /Users/runner/Library/Caches/Homebrew/
+          key: homebrew-${{ runner.os }}-${{ hashFiles('**/Brewfile') }}
+          restore-keys: homebrew-${{ runner.os }}-
+
+      - name: Install ffmpeg
+        run: |
+          brew install ffmpeg
+
