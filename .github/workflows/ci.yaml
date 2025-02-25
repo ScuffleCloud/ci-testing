@@ -20,6 +20,14 @@ jobs:
       - name: Tap ffmpeg
         run: |
           brew tap homebrew-ffmpeg/ffmpeg
+      - name: Run sccache-cache
+        uses: mozilla-actions/sccache-action@v0.0.7
+
+      - name: Set Environment Variables
+        run: |
+          echo "CC=sccache clang" >> $GITHUB_ENV
+          echo "CXX=sccache clang++" >> $GITHUB_ENV
+
       - uses: gerlero/brew-install@v1
         with:
           packages: homebrew-ffmpeg/ffmpeg/ffmpeg
