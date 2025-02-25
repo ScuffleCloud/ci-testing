@@ -17,6 +17,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+      - name: Cache Homebrew Packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            /usr/local/Homebrew
+            /usr/local/Cellar
+            ~/Library/Caches/Homebrew
+          key: homebrew-${{ runner.os }}
+          restore-keys: |
+            homebrew-${{ runner.os }}
+
       - name: Install ffmpeg
         run: |
           brew tap homebrew-ffmpeg/ffmpeg
