@@ -24,7 +24,7 @@ jobs:
       - name: Setup CC
         run: |
           bash_path=$(which bash)
-          cat <<<EOF > ./sccache-cc-wrapper
+          cat <<EOF > ./sccache-cc-wrapper
           #!$bash_path
           exec sccache clang "$@"
           EOF
