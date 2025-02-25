@@ -40,8 +40,7 @@ jobs:
         env:
           CC: clang-sccache-cc-wrapper
           CXX: clang-sccache-cc-wrapper
-          HOMEBREW_CC: clang-sccache-cc-wrapper
-          HOMEBREW_CXX: clang-sccache-cc-wrapper
+          HOMEBREW_ENV_FILTERING: 0
         run: |
           set -e
           which clang-sccache-cc-wrapper
