@@ -32,6 +32,9 @@ jobs:
           chmod +x /tmp/.brew/clang-sccache-cc-wrapper
           echo "/tmp/.brew" >> $GITHUB_PATH
 
+          brew config
+          exit 1
+
       - name: Tap ffmpeg
         run: |
           brew tap homebrew-ffmpeg/ffmpeg
